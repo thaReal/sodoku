@@ -1,0 +1,27 @@
+Notes
+=====
+Keeping this file to write some notes on high level solver-engine logic that
+we can transform into actual code. Eventually I'll probably want to add an
+abstracted program heirarchy along with respective test cases.
+
+
+Solver Logic
+------------
+So I actually wrote out a bunch of the different 'algorithmic' approaches I would 
+(or could) use when solving a sodoku and after re-reading it I think I can condense
+it down pretty significantly into 3 seperate logical approaches that would make a 
+good starting point for our 'kernels' that our solver engine can use.
+
+> Kernel 1: Explicit
+This is the approach I think the average person would take to solving a sodoku. 
+Basically by iterating through the numbers and looping through each box with
+its corresponding rows and columns, try to find locations that explicitly can only
+be one value.
+
+As long as it finds at least one value for each pass through the numbers, it can
+continue to iterate until the puzzle is solved. If at any point it has iterated through
+all the numbers and fails to find at least one value then another method must be 
+used. That said, I think this should be able to solve at least the majority of simpler
+puzzles.
+
+
