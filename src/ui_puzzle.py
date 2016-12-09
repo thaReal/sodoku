@@ -46,6 +46,38 @@ class PuzzleFrame(Frame):
 		
 		# TODO: Add error checking for char vs. num input
 		
+	def extractPuzzle(self):
+		# Probably a better way to do this too, but you would have to change more
+		# than just this function
+		
+		puzzle = []
+		for i in range(9):
+			blank_row = []
+			for j in range(9):
+				blank_row.append('')
+			puzzle.append(blank_row)
+				
+		for cell in self.cells.keys():
+			c_mult = cell.grid_info()['in'].grid_info()['column']
+			r_mult = cell.grid_info()['in'].grid_info()['row']
+			c = cell.grid_info()['column']
+			r = cell.grid_info()['row']
+			
+			row = (r_mult*3) + r
+			col = (c_mult*3) + c 
+			
+			value = self.cells[cell].get()
+			
+			if value != '':
+				#DEBUG Print
+				print "%s, %s - %s" % (row, col, value)
+				puzzle[int(row)][int(col)] = value
+		
+		#DEBUG Print - should return puzzle
+		print puzzle
+			
+			
+			
 if __name__=='__main__':
 	root = Tk()
 	root.title("Sodoku Solver")
