@@ -1,4 +1,5 @@
 from Tkinter import *
+import util
 
 class ControlFrame(Frame):
 	def __init__(self, parent):
@@ -24,7 +25,7 @@ class FileMenu(Menu):
 		self.filemenu = Menu(self, tearoff=0)	
 		self.filemenu.add_command(label="Settings", command=self.dummy)
 		self.filemenu.add_separator()
-		self.filemenu.add_command(label="Save Puzzle", command=self.dummy)
+		self.filemenu.add_command(label="Save Puzzle", command=self.savePuzzle)
 		self.filemenu.add_command(label="Load Puzzle", command=self.dummy)
 		self.filemenu.add_separator()
 		self.filemenu.add_command(label="Quit", command=self.parent.quit)
@@ -37,6 +38,11 @@ class FileMenu(Menu):
 		
 	def dummy(self):
 		pass
+		
+		
+	def savePuzzle(self):
+		puzzle = self.parent.puzzleframe.extractPuzzle()
+		util.puzzle2csv(puzzle)
 		
 		
 class AboutDialog(Tk):

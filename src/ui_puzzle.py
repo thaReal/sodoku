@@ -74,7 +74,7 @@ class PuzzleFrame(Frame):
 				puzzle[int(row)][int(col)] = value
 		
 		#DEBUG Print - should return puzzle
-		print puzzle
+		return puzzle
 			
 			
 			
