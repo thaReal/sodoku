@@ -39,3 +39,11 @@ def generate_fname():
 	return fname
 	
 
+def list_puzzles():
+	cwd = os.getcwd()
+	puzzledir = cwd + '/puzzles/'
+	puzzle_list = os.listdir(puzzledir)
+	
+	return puzzle_list
+	
+	

@@ -69,12 +69,19 @@ class PuzzleFrame(Frame):
 			value = self.cells[cell].get()
 			
 			if value != '':
-				#DEBUG Print
-				print "%s, %s - %s" % (row, col, value)
 				puzzle[int(row)][int(col)] = value
-		
-		#DEBUG Print - should return puzzle
+				# print "%s, %s - %s" % (row, col, value) # DEBUG
+				
 		return puzzle
+		
+		
+	def clearPuzzle(self):
+		for cell in self.cells.keys():
+			self.cells[cell].set('')
+			
+		
+	def inputPuzzle(self, puzzle):
+		pass
 			
 			
 			

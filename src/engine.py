@@ -9,6 +9,7 @@ class App(Tk):
 		self.title("Sodoku Solver")
 		self.initialize()
 		
+		
 	def initialize(self):
 		self.puzzleframe = ui_puzzle.PuzzleFrame(self)
 		self.controlframe = ui_interface.ControlFrame(self)
@@ -19,7 +20,12 @@ class App(Tk):
 		self.config(menu=self.filemenu)
 	
 		self.mainloop()
+
 		
+# This is obselete now, basically everything was transformed into the App class so
+# that it makes it easier for different aspects of the ui and solver engine to "talk"
+# to each other - eventually when the solver is working it'll get linked in here
+# during initialization
 
 def main():
 	root = Tk()
@@ -34,8 +40,6 @@ def main():
 	root.config(menu=filemenu)
 	
 	root.mainloop()
-	
-	
 	
 	
 if __name__=='__main__':
