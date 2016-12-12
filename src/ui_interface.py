@@ -66,17 +66,34 @@ class LoadWindow(Toplevel):
 		self.mainframe = Frame(self)
 		self.mainframe.pack()
 		
+		lbl = Label(self.mainframe, text="Select file to load:", justify=LEFT)
+		lbl.pack(expand=1, fill=X)
+		
 		self.puzzle_list = util.list_puzzles()
 		self.puzzle_box = Listbox(self.mainframe)
 		for  f in self.puzzle_list:
 			self.puzzle_box.insert(0, f)
 		self.puzzle_box.pack(expand=1, fill=X)
 		
-		self.ok_btn = Button(self.mainframe, text="Ok", command=self.dummy)
-		self.ok_btn.pack(pady=5)
+		self.ok_btn = Button(self.mainframe, text="Ok", command=self.loadFile)
+		self.ok_btn.pack(padx=5, pady=5, side=LEFT)
 		
-	def dummy(self):
-		pass
+		self.cancel_btn = Button(self.mainframe, text="Cancel", 
+		command=self.destroy)
+		self.cancel_btn.pack(padx=5, pady=5, side=LEFT)
+		
+		
+	def loadFile(self):
+		findex = self.puzzle_box.curselection()
+		if len(findex) == 0:
+			return
+		
+		fname = self.puzzle_box.get(findex)
+		print fname
+		
+		self.destroy()
+
+#------		
 		
 class AboutDialog(Toplevel):
 	def __init__(self, parent):
@@ -88,7 +105,6 @@ class AboutDialog(Toplevel):
 		self.bgframe = Frame(self, width=300, height=200, bg="green")
 		self.bgframe.pack()
 		
-				
 
 if __name__=='__main__':
 	root = Tk()
