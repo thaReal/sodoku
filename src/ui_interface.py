@@ -89,8 +89,9 @@ class LoadWindow(Toplevel):
 			return
 		
 		fname = self.puzzle_box.get(findex)
-		print fname
-		
+		puzzle = util.csv2puzzle(fname)
+		self.parent.loadPuzzle(puzzle)
+			
 		self.destroy()
 
 #------		

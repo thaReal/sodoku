@@ -20,6 +20,10 @@ class App(Tk):
 		self.config(menu=self.filemenu)
 	
 		self.mainloop()
+		
+	def loadPuzzle(self, puzzle):
+		self.puzzleframe.inputPuzzle(puzzle)
+		
 
 		
 # This is obselete now, basically everything was transformed into the App class so

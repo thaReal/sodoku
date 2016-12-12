@@ -7,7 +7,8 @@ import os
 puzzledir = "./puzzles/"
 
 def csv2puzzle(fname):
-	f = open(fname, 'r')
+	fname2 = puzzledir + fname
+	f = open(fname2, 'r')
 	reader = csv.reader(f)
 	
 	puzzle = []

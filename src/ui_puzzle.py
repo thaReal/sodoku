@@ -31,14 +31,11 @@ class PuzzleFrame(Frame):
 		self.boxes.append(boxframe)		
 					
 	def checkInput(self, event):
-			# this function fires everytime a key is released (so the input is grabbed) to 
-			# check it's valid and auto-correct so bad data can't be entered
+		# this function fires everytime a key is released (so the input is grabbed) to 
+		# check it's valid and auto-correct so bad data can't be entered
 			
 		textvar = self.cells[event.widget]
 		value  = textvar.get()
-			
-		# this checks to see if more than one character is entered and if it is, replaces
-		# it with the last value entered
 			
 		if len(value) > 1:
 			c = value[-1]
@@ -81,7 +78,23 @@ class PuzzleFrame(Frame):
 			
 		
 	def inputPuzzle(self, puzzle):
-		pass
+		self.clearPuzzle()
+		i = 0
+		for row in puzzle:
+			j = 0
+			for val in row:
+				if val != '':
+					outer_row = int(i/3)
+					outer_col = int(j/3)
+					inner_row = i % 3
+					inner_col = j % 3
+					
+					box = self.grid_slaves(outer_row, outer_col)
+					cell = box[0].grid_slaves(inner_row, inner_col)
+					#print cell
+					self.cells[cell[0]].set(str(val))
+				j += 1
+			i += 1
 			
 			
 			
