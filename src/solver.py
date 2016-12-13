@@ -1,6 +1,5 @@
 #Sodoku Solver Engine
 
-
 class Solver:
 	def __init__(self, puzzle):
 		self.puzzle = puzzle
@@ -23,8 +22,18 @@ class Solver:
 				col.append(row[i])
 			self.columns.append(col)
 			
-		# Still need to populate boxes...
-		
+		for j in range(9):
+			i = 0
+			box = []
+			for n in range(9):
+				if i == 3:
+					j += 1
+					i = 0
+				val = self.rows[j][i]
+				box.append(val)
+			self.boxes.append(box)			 
+			
+		self.debugPrint()
 		return True
 
 	def debugPrint(self):
@@ -35,5 +44,6 @@ class Solver:
 		for c in self.columns:
 			print c	
 
-if __name__=='__main__'
+
+if __name__=='__main__':
 	pass

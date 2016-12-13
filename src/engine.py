@@ -2,6 +2,7 @@ from Tkinter import *
 import ui_puzzle
 import ui_interface
 import util
+import solver
 
 class App(Tk):
 	def __init__(self):
@@ -14,7 +15,7 @@ class App(Tk):
 		self.puzzleframe = ui_puzzle.PuzzleFrame(self)
 		self.controlframe = ui_interface.ControlFrame(self)
 		self.controlframe.pack(expand=1, fill=BOTH, anchor='s')
-		self.controlframe.solve_btn["command"] = self.puzzleframe.extractPuzzle
+		self.controlframe.solve_btn["command"] = self.solvePuzzle
 		
 		self.filemenu = ui_interface.FileMenu(self)
 		self.config(menu=self.filemenu)
@@ -23,28 +24,11 @@ class App(Tk):
 		
 	def loadPuzzle(self, puzzle):
 		self.puzzleframe.inputPuzzle(puzzle)
-		
 
-		
-# This is obselete now, basically everything was transformed into the App class so
-# that it makes it easier for different aspects of the ui and solver engine to "talk"
-# to each other - eventually when the solver is working it'll get linked in here
-# during initialization
-
-def main():
-	root = Tk()
-	root.title("Sodoku Solver")
-	
-	puzzleframe = ui_puzzle.PuzzleFrame(root)
-	controlframe = ui_interface.ControlFrame(root)
-	controlframe.pack(expand=1, fill=BOTH, anchor='s')
-	controlframe.solve_btn["command"] = puzzleframe.extractPuzzle
-	
-	filemenu = ui_interface.FileMenu(root)
-	root.config(menu=filemenu)
-	
-	root.mainloop()
-	
+	def solvePuzzle(self):
+		puzzle = self.puzzleframe.extractPuzzle()
+		self.solver = solver.Solver(puzzle)
+		self.solver.check_puzzle()		
 	
 if __name__=='__main__':
 	app = App()

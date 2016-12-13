@@ -31,9 +31,6 @@ class PuzzleFrame(Frame):
 		self.boxes.append(boxframe)		
 					
 	def checkInput(self, event):
-		# this function fires everytime a key is released (so the input is grabbed) to 
-		# check it's valid and auto-correct so bad data can't be entered
-			
 		textvar = self.cells[event.widget]
 		value  = textvar.get()
 			
@@ -44,9 +41,6 @@ class PuzzleFrame(Frame):
 		# TODO: Add error checking for char vs. num input
 		
 	def extractPuzzle(self):
-		# Probably a better way to do this too, but you would have to change more
-		# than just this function
-		
 		puzzle = []
 		for i in range(9):
 			blank_row = []
