@@ -27,12 +27,19 @@ class App(Tk):
 
 	def solvePuzzle(self):
 		puzzle = self.puzzleframe.extractPuzzle()
-		self.solver = solver.Solver(puzzle)
-		self.solver.check_puzzle()
 		
-		box = self.solver.boxes[0]
+		print "[+] Solver Starting"
+		sl = solver.Solver(puzzle)
+		sl.check_puzzle()
+		
+		box = sl.boxes[0]
 		solver.runBFSB(box)
-				
+		
+		print "[+] Solver Finished"
+
+	def printTest(self):
+		print "Test..."
+	
 	
 if __name__=='__main__':
 	app = App()

@@ -81,25 +81,28 @@ class BFSB_Engine:
 	def create_pnumbers(self):
 		for i in self.box:
 			try:
-				index = self.numbers.index(i)
-				value = self.numbers.pop(index)
-				self.given[index] = value
+				index = self.numbers.index(int(i))
+				self.numbers.pop(index)
+		
 			except:
 				pass
 				
 	def count_permutations(self):
-		p = permutations(self.numbers, 9)
+		l = len(self.numbers)
+		print "[+] %s unknown numbers" % l
+		
+		p = permutations(self.numbers, l)
 		count = 0
 		while True:
 			try:
 				iteration = p.next()
 				count += 1
+				if count % 1000 == 0:
+					print " > %s permutations generated" % count
+		
 			except:
 				break
 		
-		if count % 1000 == 0:
-			print " > %s permutations generated" % count
-
 		print "[+] %s total permuations generated" % count
 		
 		
