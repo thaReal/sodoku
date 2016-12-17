@@ -26,14 +26,11 @@ class App(Tk):
 		self.puzzleframe.inputPuzzle(puzzle)
 
 	def solvePuzzle(self):
-		puzzle = self.puzzleframe.extractPuzzle()
-		
+		raw_puzzle = self.puzzleframe.extractPuzzle()
 		print "[+] Solver Starting"
-		sl = solver.Solver(puzzle)
-		sl.check_puzzle()
 		
-		box = sl.boxes[0]
-		solver.runBFSB(box)
+		puzzle = solver.Puzzle(raw_puzzle)
+		
 		
 		print "[+] Solver Finished"
 

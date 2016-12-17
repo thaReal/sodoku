@@ -1,29 +1,45 @@
 #Sodoku Solver Engine
+
 from math import factorial
 from itertools import permutations
 
-class Solver:
-	def __init__(self, puzzle):
-		self.puzzle = puzzle
+class Puzzle:
+	def __init__(self, raw_puzzle):
+		self.raw_puzzle = raw_puzzle
 		self.rows = []
 		self.columns = []
 		self.boxes = []
+		self.valid = True
 		
-	def check_puzzle(self):
-		if len(self.puzzle) != 9:
+		if self.check_raw_puzzle() != True:
+			self.valid = False
+			return
+		
+		self.populate()
+		self.debugPrint()
+
+		
+	def check_raw_puzzle(self):
+		if len(self.raw_puzzle) != 9:
 			return False
 		
-		for row in self.puzzle:
+		for row in self.raw_puzzle:
 			if len(row) != 9:
 				return False
+		
+		return True
+		
+		
+	def populate(self):
+		for row in self.raw_puzzle:
 			self.rows.append(row)
-			
+		
 		for i in range(9):
 			col = []
 			for row in self.rows:
 				col.append(row[i])
 			self.columns.append(col)
-			
+		
 		for j in range(3):
 			for i in range(3):
 				box = []
@@ -33,10 +49,8 @@ class Solver:
 					cell = self.rows[y][x]
 					box.append(cell)
 				self.boxes.append(box)
-			
-		self.debugPrint()
-		
-		
+	
+	
 	def debugPrint(self):
 		print "Rows:"
 		for r in self.rows:
@@ -50,8 +64,6 @@ class Solver:
 		for b in self.boxes:
 			print b
 			
-		print "\nBrute force # of possibilites: %s\n" % self.calc_possibilities()
-
 
 	def calc_possibilities(self):
 		n = 0
@@ -67,9 +79,16 @@ class Solver:
 			n = 0
 		
 		return p
+		
+		
+		
+class Solver:
+	def __init__(self, puzzle):
+		self.puzzle = puzzle
+		
+		
 
-
-class BFSB_Engine:
+class SB_Perm_Gen:
 	def __init__(self, box):
 		self.box = box
 		self.numbers = [1,2,3,4,5,6,7,8,9]
@@ -82,8 +101,9 @@ class BFSB_Engine:
 		for i in self.box:
 			try:
 				index = self.numbers.index(int(i))
-				self.numbers.pop(index)
-		
+				value = self.numbers.pop(index)
+				self.given[index] = value
+				
 			except:
 				pass
 				
@@ -106,8 +126,11 @@ class BFSB_Engine:
 		print "[+] %s total permuations generated" % count
 		
 		
-def runBFSB(box):
-	bfsb = BFSB_Engine(box)
+		
+def run(puzzle):
+	pass
+
+
 
 if __name__=='__main__':
 	pass

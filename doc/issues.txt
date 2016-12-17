@@ -1,0 +1,10 @@
+Issues
+======
+
+[01] Load puzzle menu breaks if engine is launched from outside the src 
+     directory.
+
+     May want to wait until final structure is set since the executable will
+     likely be sitting above the src directory in the root folder. Otherwise 
+     this can be fixed pretty easily by changing relative paths used to find 
+     puzzle directory. 
