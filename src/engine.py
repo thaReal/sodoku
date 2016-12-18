@@ -30,7 +30,8 @@ class App(Tk):
 		print "[+] Solver Starting"
 		
 		puzzle = solver.Puzzle(raw_puzzle)
-		
+		sl = solver.Solver(puzzle)
+		sl.count_perms()
 		
 		print "[+] Solver Finished"
 
