@@ -17,7 +17,11 @@ class Puzzle:
 			return
 		
 		self.populate()
-		#self.debugPrint()
+		
+		if check_puzzle(self) != True:
+			self.valid = False
+			return
+		
 		print "[+] Puzzle valid & populated!"
 		
 		
@@ -52,6 +56,11 @@ class Puzzle:
 					box.append(cell)
 				self.boxes.append(box)
 	
+	def regen_rows(self):
+		pass
+		
+	def regen_columns(self):
+		pass
 	
 	def debugPrint(self):
 		print "Rows:"
@@ -72,12 +81,13 @@ class Box:
 		self.box = box
 		self.numbers = [1,2,3,4,5,6,7,8,9]
 		self.create_pnumbers()
-		
+		self.generate_permutations()	
+			
 	def create_pnumbers(self):
 		for i in self.box:
 			try:
 				index = self.numbers.index(int(i))
-				value = self.numbers.pop(index)
+				self.numbers.pop(index)
 								
 			except:
 				pass
@@ -86,6 +96,35 @@ class Box:
 		l = len(self.numbers)
 		n = factorial(l)
 		return n
+	
+	def generate_permutations(self):
+		l = len(self.numbers)
+		self.p = permutations(self.numbers, l)
+		
+
+	def get_permutation(self):
+		try:
+			iteration = self.p.next()
+			return iteration
+			
+		except:
+			return None
+			
+	def fill_box(self, p):
+		box = []
+		count = 0
+		for i in self.box:
+			if i == '':
+				value = p[count]
+				count += 1
+				box.append(value)
+			else:
+				value = int(i) # probably should convert this in the beginning...
+				box.append(value)
+				
+		print box
+		return box
+				
 		
 		
 class Solver:
@@ -96,14 +135,47 @@ class Solver:
 		n = 0
 		for i in range(9):
 			box = Box(self.puzzle.boxes[i])
-			# print box.get_possibilities()
 			if n == 0:
 				n += box.get_possibilities()
 			else:
 				n *= box.get_possibilities()
-		
 		print "  > %s total possibilities" % n
 
+	# This is gonna be a little rocky for a while...
+	def generate_solution_space(self):
+			puzzle = self.puzzle
+			i = 0
+			boxes = []
+			box = Box(self.puzzle.boxes[i])
+			boxes.append(box)
+			print boxes[0].get_possibilities()
+			
+			while i < 8:
+				p = boxes[i].get_permutation()
+				print p
+				
+				if p == None:
+					if i == 0:
+						break
+					else:
+						i -= 1
+				
+				else:
+					puzzle.boxes[i] = boxes[i].fill_box(p)
+					if check_puzzle(puzzle):
+						i += 1
+						print " >> i = %s" % i
+			
+						if i < 8:
+							box = Box(self.puzzle.boxes[i])
+							boxes.append(box)
+			
+					else:
+						puzzle.boxes[i] = self.puzzle.boxes[i]
+					
+			
+			
+			
 			
 def check_puzzle(puzzle):
 	for row in puzzle.rows:
@@ -123,24 +195,18 @@ def check_puzzle(puzzle):
 
 '''
 	# Reference
-	def count_permutations(self):
+	def generate_permutations(self):
 		l = len(self.numbers)
-		print "[+] %s unknown numbers" % l
-		
 		p = permutations(self.numbers, l)
-		count = 0
-		plist = []
+		return p
 		
-		while True:
+	def get_permutation(box):
 			try:
 				iteration = p.next()
-				count += 1
-				plist.append(iteration)
+				return iteration
 				
 			except:
-				break
-		
-		return plist
+				return None
 	'''
 	
 	

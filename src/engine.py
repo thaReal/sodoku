@@ -31,7 +31,7 @@ class App(Tk):
 		
 		puzzle = solver.Puzzle(raw_puzzle)
 		sl = solver.Solver(puzzle)
-		sl.count_perms()
+		sl.generate_solution_space()
 		
 		print "[+] Solver Finished"
 
