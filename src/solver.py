@@ -38,7 +38,14 @@ class Puzzle:
 		
 	def populate(self):
 		for row in self.raw_puzzle:
-			self.rows.append(row)
+			i_row = []
+			for i in row:
+				try:
+					i_row.append(int(i))
+				except:
+					i_row.append(i)
+					
+			self.rows.append(i_row)
 		
 		for i in range(9):
 			col = []
@@ -56,24 +63,27 @@ class Puzzle:
 					box.append(cell)
 				self.boxes.append(box)
 	
-	def regen_rows(self):
-		pass
-		
-	def regen_columns(self):
-		pass
+	# Maybe...?
+	def regenerate(self, i):
+		x0 = (i % 3) * 3
+		y0 = int(i / 3) * 3
+		n = 0
+		for j in range(3):
+			x = x0 + j
+			for k in range(3):
+				y = y0 + k
+				self.rows[y][x] = self.boxes[i][n]
+				self.columns[x][y] = self.boxes[i][n]
+				n += 1
+		self.debugPrint()
+	
+	# This class needs to be updated - either just print the rows (so it looks like a 
+	# regular puzzle, or use __str__  / __repr()__ 
 	
 	def debugPrint(self):
-		print "Rows:"
 		for r in self.rows:
 			print r
-		
-		print "\nColumns:"
-		for c in self.columns:
-			print c	
-
-		print "\nBoxes:"
-		for b in self.boxes:
-			print b
+		print ''
 
 
 class Box:
@@ -122,7 +132,6 @@ class Box:
 				value = int(i) # probably should convert this in the beginning...
 				box.append(value)
 				
-		print box
 		return box
 				
 		
@@ -152,7 +161,7 @@ class Solver:
 			
 			while i < 8:
 				p = boxes[i].get_permutation()
-				print p
+				# print p # Debug
 				
 				if p == None:
 					if i == 0:
@@ -162,6 +171,7 @@ class Solver:
 				
 				else:
 					puzzle.boxes[i] = boxes[i].fill_box(p)
+					puzzle.regenerate(i)
 					if check_puzzle(puzzle):
 						i += 1
 						print " >> i = %s" % i
