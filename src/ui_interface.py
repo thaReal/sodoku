@@ -7,15 +7,21 @@ class ControlFrame(Frame):
 		self.parent = parent
 		self.initialize()
 		
+		self.init_debug()
+		
 	def initialize(self):
 		self.solve_btn = Button(self, text="Solve")
-		self.solve_btn.grid(column=0, row=0, padx=5, pady=5, sticky="W")
+		self.solve_btn.grid(column=0, row=0, padx=5, pady=5)
 		
 		self.clear_btn = Button(self, text="Clear", command=self.clearPuzzle)
-		self.clear_btn.grid(column=1, row=0, padx=5, pady=5, sticky="W")
+		self.clear_btn.grid(column=1, row=0, padx=5, pady=5)
 		
 		self.quit_btn = Button(self, text="Quit", command=self.parent.destroy)
-		self.quit_btn.grid(column=2, row=0, padx=5, pady=5, sticky="W")
+		self.quit_btn.grid(column=2, row=0, padx=5, pady=5)
+		
+	def init_debug(self):
+		self.validate_btn = Button(self, text="Validate")
+		self.validate_btn.grid(column=0, row=1, padx=5, pady=5)
 		
 	def clearPuzzle(self):
 		self.parent.puzzleframe.clearPuzzle()
@@ -93,6 +99,22 @@ class LoadWindow(Toplevel):
 		self.parent.loadPuzzle(puzzle)
 			
 		self.destroy()
+		
+		
+class StatusBar(Frame):
+	def __init__(self, parent):
+		Frame.__init__(self, parent, relief=SUNKEN, borderwidth=2)
+		self.parent = parent
+		self.text = StringVar()
+		self.text.set("waiting for input...")
+		self.initialize()
+	
+	def initialize(self):
+		lbl = Label(self, text="<Status>: ")
+		lbl.grid(column=0, row=0, sticky='w', padx=5) 
+		
+		self.status_label = Label(self, textvar=self.text, fg="Green")
+		self.status_label.grid(column=1, row=0, sticky='w')
 
 #------		
 		

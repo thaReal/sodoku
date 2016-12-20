@@ -14,8 +14,10 @@ class App(Tk):
 	def initialize(self):
 		self.puzzleframe = ui_puzzle.PuzzleFrame(self)
 		self.controlframe = ui_interface.ControlFrame(self)
-		self.controlframe.pack(expand=1, fill=BOTH, anchor='s')
+		self.controlframe.pack(expand=1, fill=BOTH)
 		self.controlframe.solve_btn["command"] = self.solvePuzzle
+		self.statusbar = ui_interface.StatusBar(self)
+		self.statusbar.pack(expand=1, fill=X, anchor='s')
 		
 		self.filemenu = ui_interface.FileMenu(self)
 		self.config(menu=self.filemenu)
@@ -35,9 +37,10 @@ class App(Tk):
 		
 		print "[+] Solver Finished"
 
-	def printTest(self):
-		print "Test..."
-	
+	def debugValidate(self):
+		raw_puzzle = self.puzzleframe.extractPuzzle()
+		puzzle = solver.Puzzle(raw_puzzle)
+		print "[+] Done!"
 	
 if __name__=='__main__':
 	app = App()
