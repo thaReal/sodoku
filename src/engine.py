@@ -16,6 +16,7 @@ class App(Tk):
 		self.controlframe = ui_interface.ControlFrame(self)
 		self.controlframe.pack(expand=1, fill=BOTH)
 		self.controlframe.solve_btn["command"] = self.solvePuzzle
+		self.controlframe.validate_btn["command"] = self.debugValidate
 		self.statusbar = ui_interface.StatusBar(self)
 		self.statusbar.pack(expand=1, fill=X, anchor='s')
 		
@@ -40,6 +41,7 @@ class App(Tk):
 	def debugValidate(self):
 		raw_puzzle = self.puzzleframe.extractPuzzle()
 		puzzle = solver.Puzzle(raw_puzzle)
+		puzzle.debugPrint()
 		print "[+] Done!"
 	
 if __name__=='__main__':

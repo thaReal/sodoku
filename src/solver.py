@@ -14,12 +14,14 @@ class Puzzle:
 		
 		if self.check_raw_puzzle() != True:
 			self.valid = False
+			print "[-] Failed raw puzzle check"
 			return
 		
 		self.populate()
 		
 		if check_puzzle(self) != True:
 			self.valid = False
+			print "[-] Failed global puzzle check"
 			return
 		
 		print "[+] Puzzle valid & populated!"
@@ -182,42 +184,37 @@ class Solver:
 			
 					else:
 						puzzle.boxes[i] = self.puzzle.boxes[i]
-					
-			
-			
 			
 			
 def check_puzzle(puzzle):
 	for row in puzzle.rows:
-		if len(row) != len(set(row)):
-			return False
+		nrow = clean_blanks(row)
+		if len(nrow) != 0:
+			if len(nrow) != len(set(nrow)):	
+				return False
 			
 	for col in puzzle.columns:
-		if len(col) != len(set(col)):
-			return False
+		ncol = clean_blanks(col)
+		if len(ncol) != 0:
+			if len(ncol) != len(set(ncol)):
+				return False
 			
 	for box in puzzle.boxes:
-		if len(box) != len(set(box)):
-			return False
+		nbox = clean_blanks(box)
+		if len(nbox) != 0:
+			if len(nbox) != len(set(nbox)):
+				return False
 				
 	return True
 				
-
-'''
-	# Reference
-	def generate_permutations(self):
-		l = len(self.numbers)
-		p = permutations(self.numbers, l)
-		return p
-		
-	def get_permutation(box):
-			try:
-				iteration = p.next()
-				return iteration
 				
-			except:
-				return None
-	'''
+def clean_blanks(plist):
+	clean_list = []
+	for x in plist:
+		 if x != '':
+		 	clean_list.append(x)
+		
+	return clean_list
 	
 	
 	
