@@ -86,8 +86,17 @@ class Puzzle:
 		for r in self.rows:
 			print r
 		print ''
-
-
+		
+		'''
+		for c in self.columns:
+			print c
+		print ""
+		
+		for b in self.boxes:
+			print b
+		print ""
+		'''
+		
 class Box:
 	def __init__(self, box):
 		self.box = box
@@ -131,8 +140,7 @@ class Box:
 				count += 1
 				box.append(value)
 			else:
-				value = int(i) # probably should convert this in the beginning...
-				box.append(value)
+				box.append(i)
 				
 		return box
 				
@@ -156,15 +164,15 @@ class Solver:
 	def generate_solution_space(self):
 			puzzle = self.puzzle
 			i = 0
+			n = 0
 			boxes = []
-			box = Box(self.puzzle.boxes[i])
-			boxes.append(box)
-			print boxes[0].get_possibilities()
+			for x in range(9):
+				box = Box(self.puzzle.boxes[x])
+				boxes.append(box)
+			# print boxes[0].get_possibilities()
 			
 			while i < 8:
 				p = boxes[i].get_permutation()
-				# print p # Debug
-				
 				if p == None:
 					if i == 0:
 						break
@@ -172,37 +180,44 @@ class Solver:
 						i -= 1
 				
 				else:
+					print boxes[i].fill_box(p)
 					puzzle.boxes[i] = boxes[i].fill_box(p)
 					puzzle.regenerate(i)
-					if check_puzzle(puzzle):
+					result = check_puzzle(puzzle)
+					print result
+					
+					if check_puzzle(puzzle) == True:
 						i += 1
 						print " >> i = %s" % i
-			
-						if i < 8:
-							box = Box(self.puzzle.boxes[i])
-							boxes.append(box)
+						n += 1
 			
 					else:
+						print "Iteration %s, INVALID" % n
 						puzzle.boxes[i] = self.puzzle.boxes[i]
-			
+						n += 1
 			
 def check_puzzle(puzzle):
 	for row in puzzle.rows:
 		nrow = clean_blanks(row)
 		if len(nrow) != 0:
 			if len(nrow) != len(set(nrow)):	
+				print ">>> Row check failed"
+				print nrow
+				print "%s : %s" % (len(nrow), len(set(nrow)))
 				return False
 			
 	for col in puzzle.columns:
 		ncol = clean_blanks(col)
 		if len(ncol) != 0:
 			if len(ncol) != len(set(ncol)):
+				print ">>> Column check failed"
 				return False
 			
 	for box in puzzle.boxes:
 		nbox = clean_blanks(box)
 		if len(nbox) != 0:
 			if len(nbox) != len(set(nbox)):
+				print ">>> Box check failed"
 				return False
 				
 	return True
