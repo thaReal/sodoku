@@ -24,7 +24,10 @@ class ControlFrame(Frame):
 		self.validate_btn.grid(column=0, row=1, padx=5, pady=5)
 		
 		self.stepsolve_btn = Button(self, text="Initialize Ssolver")
-		self.stepsolve_btn.grid(column=1, row=1, padx=5, pady=5)
+		self.stepsolve_btn.grid(column=1, row=1, columnspan=2, padx=5, pady=5)
+		
+		self.step_btn = Button(self, text="Step >", state="disabled")
+		self.step_btn.grid(column=0, row=2, padx=5, pady=5)
 		
 	def clearPuzzle(self):
 		self.parent.puzzleframe.clearPuzzle()

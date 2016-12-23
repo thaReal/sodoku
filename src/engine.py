@@ -45,11 +45,14 @@ class App(Tk):
 		raw_puzzle = self.puzzleframe.extractPuzzle()
 		self.stepsolver = solver.StepSolver(raw_puzzle)
 		
+		self.controlframe.step_btn['state'] = 'normal'
+		self.controlframe.step_btn['command'] = self.stepsolver.step
+		
 	def step(self):
 		try:
 			self.stepsolver.step()
-		except e:
-			print "Error: %s" % e
+		except:
+			print "Error"
 		
 	def debugValidate(self):
 		raw_puzzle = self.puzzleframe.extractPuzzle()

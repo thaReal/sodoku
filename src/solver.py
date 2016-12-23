@@ -155,9 +155,9 @@ class Guess:
 			if i == '':
 				value = p[count]
 				count += 1
-				box.append(value)
+				row.append(value)
 			else:
-				box.append(i)
+				row.append(i)
 				
 		return row
 #-----
@@ -277,10 +277,12 @@ class StepSolver:
 			self.guesses.append(guess)
 		
 	def step(self):
+		print "step fired"
 		if self.i < 8:
 				p = self.guesses[self.i].get_permutation()
 				if p == None:
 					if i == 0:
+						print "No guesses.."
 						return
 					else:
 						i -= 1
@@ -288,7 +290,7 @@ class StepSolver:
 				else:
 					# Here's where (at least I know) code is breaking down
 					
-					self.pSolution.rows[self.i] = guess[self.i].make_attempt(p)
+					self.pSolution.rows[self.i] = self.guesses[self.i].make_attempt(p)
 					self.pSolution.repopulate()
 					
 					# DEBUG
@@ -302,7 +304,7 @@ class StepSolver:
 						self.n += 1
 			
 					else:
-						print "Iteration %s, INVALID" % n
+						print "Iteration %s, INVALID" % self.n
 						self.pSolution.rows[self.i] = self.puzzle.rows[self.i]
 						self.pSolution.repopulate()
 						self.n += 1
