@@ -15,8 +15,11 @@ class App(Tk):
 		self.puzzleframe = ui_puzzle.PuzzleFrame(self)
 		self.controlframe = ui_interface.ControlFrame(self)
 		self.controlframe.pack(expand=1, fill=BOTH)
+		
 		self.controlframe.solve_btn["command"] = self.solvePuzzle
 		self.controlframe.validate_btn["command"] = self.debugValidate
+		self.controlframe.stepsolve_btn["command"] = self.stepSolverInit
+		
 		self.statusbar = ui_interface.StatusBar(self)
 		self.statusbar.pack(expand=1, fill=X, anchor='s')
 		
@@ -38,6 +41,16 @@ class App(Tk):
 		
 		print "[+] Solver Finished"
 
+	def stepSolverInit(self):
+		raw_puzzle = self.puzzleframe.extractPuzzle()
+		self.stepsolver = solver.StepSolver(raw_puzzle)
+		
+	def step(self):
+		try:
+			self.stepsolver.step()
+		except e:
+			print "Error: %s" % e
+		
 	def debugValidate(self):
 		raw_puzzle = self.puzzleframe.extractPuzzle()
 		puzzle = solver.Puzzle(raw_puzzle)

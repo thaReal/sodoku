@@ -23,6 +23,9 @@ class ControlFrame(Frame):
 		self.validate_btn = Button(self, text="Validate")
 		self.validate_btn.grid(column=0, row=1, padx=5, pady=5)
 		
+		self.stepsolve_btn = Button(self, text="Initialize Ssolver")
+		self.stepsolve_btn.grid(column=1, row=1, padx=5, pady=5)
+		
 	def clearPuzzle(self):
 		self.parent.puzzleframe.clearPuzzle()
 		

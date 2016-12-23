@@ -65,6 +65,25 @@ class Puzzle:
 					box.append(cell)
 				self.boxes.append(box)
 	
+	def repopulate(self):
+		self.columns = []
+		for i in range(9):
+			col = []
+			for row in self.rows:
+				col.append(row[i])
+			self.columns.append(col)
+		
+		self.boxes = []
+		for j in range(3):
+			for i in range(3):
+				box = []
+				for k in range(9):
+					x = (k % 3) + (i * 3)
+					y = int(k / 3) + (j * 3)
+					cell = self.rows[y][x]
+					box.append(cell)
+				self.boxes.append(box)
+	
 	# Maybe...?
 	def regenerate(self, i):
 		x0 = (i % 3) * 3
@@ -96,6 +115,52 @@ class Puzzle:
 			print b
 		print ""
 		'''
+		
+class Guess:
+	def __init__(self, row):
+		self.row = row
+		self.numbers = [1,2,3,4,5,6,7,8,9]
+		self.create_pnumbers()
+		self.generate_permutations()
+		
+	def create_pnumbers(self):
+		for i in self.row:
+			try:
+				index = self.numbers.index(int(i))
+				self.numbers.pop(index)
+								
+			except:
+				pass		
+
+	def generate_permutations(self):
+		l = len(self.numbers)
+		self.p = permutations(self.numbers, l)
+
+	def get_permutation(self):
+		try:
+			iteration = self.p.next()
+			return iteration
+		except:
+			return None
+
+	def get_possibilities(self):
+		l = len(self.numbers)
+		n = factorial(l)
+		return n			
+
+	def make_attempt(self, p):
+		row = []
+		count = 0
+		for i in self.row:
+			if i == '':
+				value = p[count]
+				count += 1
+				box.append(value)
+			else:
+				box.append(i)
+				
+		return row
+#-----
 		
 class Box:
 	def __init__(self, box):
@@ -196,6 +261,54 @@ class Solver:
 						puzzle.boxes[i] = self.puzzle.boxes[i]
 						n += 1
 			
+			
+class StepSolver:
+	def __init__(self, rawpuzzle):
+		self.puzzle = Puzzle(rawpuzzle)
+		self.initialize()
+		
+	def initialize(self):
+		self.pSolution = Puzzle(self.puzzle.rows)
+		self.i = 0
+		self.n = 0
+		self.guesses = []
+		for x in range(9):
+			guess = Guess(self.puzzle.rows[x])
+			self.guesses.append(guess)
+		
+	def step(self):
+		if self.i < 8:
+				p = self.guesses[self.i].get_permutation()
+				if p == None:
+					if i == 0:
+						return
+					else:
+						i -= 1
+				
+				else:
+					# Here's where (at least I know) code is breaking down
+					
+					self.pSolution.rows[self.i] = guess[self.i].make_attempt(p)
+					self.pSolution.repopulate()
+					
+					# DEBUG
+					# result = check_puzzle(self.pSolution)
+					# print result
+					
+					if check_puzzle(self.pSolution) == True:
+						self.i += 1
+						print "Iteration %s, VALID" % self.n
+						print " >> i = %s" % self.i
+						self.n += 1
+			
+					else:
+						print "Iteration %s, INVALID" % n
+						self.pSolution.rows[self.i] = self.puzzle.rows[self.i]
+						self.pSolution.repopulate()
+						self.n += 1
+		else:
+			return
+
 def check_puzzle(puzzle):
 	for row in puzzle.rows:
 		nrow = clean_blanks(row)
