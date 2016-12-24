@@ -35,9 +35,9 @@ class App(Tk):
 		raw_puzzle = self.puzzleframe.extractPuzzle()
 		print "[+] Solver Starting"
 		
-		puzzle = solver.Puzzle(raw_puzzle)
-		sl = solver.Solver(puzzle)
-		sl.generate_solution_space()
+		#puzzle = solver.Puzzle(raw_puzzle)
+		#sl = solver.Solver(puzzle)
+		#sl.generate_solution_space()
 		
 		print "[+] Solver Finished"
 
@@ -48,17 +48,32 @@ class App(Tk):
 		self.controlframe.step_btn['state'] = 'normal'
 		self.controlframe.step_btn['command'] = self.stepsolver.step
 		
-	def step(self):
-		try:
-			self.stepsolver.step()
-		except:
-			print "Error"
+		self.controlframe.display_btn['state'] = 'normal'
+		self.controlframe.display_btn['command'] = self.stepsolver.pSolution.debugPrint
+		
+		self.controlframe.mstep_btn['state'] = 'normal'
+		self.controlframe.mstep_btn['command'] = self.multistep
+		
+		self.controlframe.mstep2_btn['state'] = 'normal'
+		self.controlframe.mstep2_btn['command'] = self.multistep2
+		
+		self.controlframe.run_btn['state'] = 'normal'
+		self.controlframe.run_btn['command'] = self.run
 		
 	def debugValidate(self):
 		raw_puzzle = self.puzzleframe.extractPuzzle()
 		puzzle = solver.Puzzle(raw_puzzle)
 		puzzle.debugPrint()
 		print "[+] Done!"
+		
+	def multistep(self):
+		self.stepsolver.multistep(100)
+		
+	def multistep2(self):
+		self.stepsolver.multistep(1000)
+		
+	def run(self):
+		self.stepsolver.run()
 	
 if __name__=='__main__':
 	app = App()

@@ -19,15 +19,35 @@ class ControlFrame(Frame):
 		self.quit_btn = Button(self, text="Quit", command=self.parent.destroy)
 		self.quit_btn.grid(column=2, row=0, padx=5, pady=5)
 		
+		
 	def init_debug(self):
+		self.seperator = Frame(self, height=2, bg="black")
+		self.seperator.grid(column=0, row=1, columnspan=3, sticky="WE")
+		
 		self.validate_btn = Button(self, text="Validate")
-		self.validate_btn.grid(column=0, row=1, padx=5, pady=5)
+		self.validate_btn.grid(column=0, row=2, padx=5, pady=5)
 		
 		self.stepsolve_btn = Button(self, text="Initialize Ssolver")
-		self.stepsolve_btn.grid(column=1, row=1, columnspan=2, padx=5, pady=5)
+		self.stepsolve_btn.grid(column=1, row=2, columnspan=2, padx=5, pady=5)
 		
-		self.step_btn = Button(self, text="Step >", state="disabled")
-		self.step_btn.grid(column=0, row=2, padx=5, pady=5)
+		step_lbl = Label(self, text="Step Options:", justify='center')
+		step_lbl.grid(column=0, row=3, columnspan=3)
+		
+		self.step_btn = Button(self, text="1x", state="disabled")
+		self.step_btn.grid(column=0, row=4, padx=5, pady=5)
+		
+		self.mstep_btn = Button(self, text="100x", state="disabled")
+		self.mstep_btn.grid(column=1, row=4, padx=5, pady=5)
+		
+		self.mstep2_btn = Button(self, text="1000x", state="disabled")
+		self.mstep2_btn.grid(column=2, row=4, padx=5, pady=5)
+		
+		self.display_btn = Button(self, text="Display", state="disabled")
+		self.display_btn.grid(column=0, row=5, padx=5, pady=5)
+		
+		self.run_btn = Button(self, text="Run", state="disabled")
+		self.run_btn.grid(column=2, row=5, padx=5, pady=5)
+		
 		
 	def clearPuzzle(self):
 		self.parent.puzzleframe.clearPuzzle()
