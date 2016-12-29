@@ -33,13 +33,7 @@ class App(Tk):
 
 	def solvePuzzle(self):
 		raw_puzzle = self.puzzleframe.extractPuzzle()
-		print "[+] Solver Starting"
 		
-		#puzzle = solver.Puzzle(raw_puzzle)
-		#sl = solver.Solver(puzzle)
-		#sl.generate_solution_space()
-		
-		print "[+] Solver Finished"
 
 	def stepSolverInit(self):
 		raw_puzzle = self.puzzleframe.extractPuzzle()

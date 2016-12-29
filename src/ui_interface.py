@@ -61,7 +61,7 @@ class FileMenu(Menu):
 		
 	def initialize(self):
 		self.filemenu = Menu(self, tearoff=0)	
-		self.filemenu.add_command(label="Settings", command=self.dummy)
+		self.filemenu.add_command(label="Settings", command=self.settingsDialog)
 		self.filemenu.add_separator()
 		self.filemenu.add_command(label="Save Puzzle", command=self.savePuzzle)
 		self.filemenu.add_command(label="Load Puzzle", command=self.loadPuzzle)
@@ -71,8 +71,7 @@ class FileMenu(Menu):
 		
 		self.helpmenu = Menu(self, tearoff=0)
 		self.helpmenu.add_command(label="About", command=self.aboutDialog)
-		self.add_cascade(label="Help", menu = self.helpmenu)
-		
+		self.add_cascade(label="Help", menu = self.helpmenu)		
 		
 	def dummy(self):
 		pass
@@ -87,6 +86,8 @@ class FileMenu(Menu):
 	def aboutDialog(self):
 		self.about = AboutDialog(self.parent)
 
+	def settingsDialog(self):
+		self.settings = SettingsWindow(self.parent)
 
 class LoadWindow(Toplevel):
 	def __init__(self, parent):
@@ -113,7 +114,6 @@ class LoadWindow(Toplevel):
 		self.cancel_btn = Button(self.mainframe, text="Cancel", 
 		command=self.destroy)
 		self.cancel_btn.pack(padx=5, pady=5, side=LEFT)
-		
 		
 	def loadFile(self):
 		findex = self.puzzle_box.curselection()
@@ -142,6 +142,67 @@ class StatusBar(Frame):
 		self.status_label = Label(self, textvar=self.text, fg="Green")
 		self.status_label.grid(column=1, row=0, sticky='w')
 
+
+class SettingsWindow(Toplevel):
+	def __init__(self, parent):
+		Toplevel.__init__(self, parent)
+		self.parent = parent
+		self.debugMode = IntVar()
+		self.autosave = IntVar()
+		self.initialize()
+		
+	def initialize(self):
+		self.frame = Frame(self, bg="#204a87")
+		self.frame.pack(expand=1, fill=BOTH)
+		
+		title_lbl = Label(self.frame, text="Settings", justify='center', relief=RAISED,
+		borderwidth=3)
+		title_lbl.grid(column=0, row=0, columnspan=3, padx=5, pady=5, ipadx=5, 
+		sticky="NWE")
+		
+		debug_lbl = Label(self.frame, text="Debug Mode: ")
+		debug_lbl.grid(column=0, row=1, padx=5, pady=5, sticky="NW")
+		
+		debug_on = Radiobutton(self.frame, text="On", variable=self.debugMode,
+		value=1, command=self.select_debug)
+		debug_on.grid(column=1, row=1, padx=2, pady=5, sticky="NW")
+		
+		debug_off = Radiobutton(self.frame, text="Off", variable=self.debugMode,
+		value=0, command=self.select_debug)
+		debug_off.grid(column=2, row=1, padx=2, pady=5, sticky="NW")
+		
+		autosave_lbl = Label(self.frame, text="Autosave\nSolution: ")
+		autosave_lbl.grid(column=0, row=2, padx=5, pady=5, sticky="NW")
+		
+		autosave_on = Radiobutton(self.frame, text="On", variable=self.autosave,
+		value=1, command=self.select_autosave)
+		autosave_on.grid(column=1, row=2, padx=2, pady=5, sticky="NW")
+		
+		autosave_off = Radiobutton(self.frame, text="Off", variable=self.autosave,
+		value=0, command=self.select_autosave)
+		autosave_off.grid(column=2, row=2, padx=2, pady=5, sticky="NW")
+		
+		buttonframe = Frame(self.frame)
+		buttonframe.grid(column=0, row=3, columnspan=3, sticky="SWE")
+		
+		ok_btn = Button(buttonframe, text="Ok", command=self.ok_press)
+		ok_btn.grid(column=0, row=0, padx=5)
+		
+		cancel_btn = Button(buttonframe, text="Cancel", command=self.cancel_press)
+		cancel_btn.grid(column=1, row=0, padx=5)
+		
+	def select_debug(self):
+		pass
+		
+	def select_autosave(self):
+		pass
+				
+	def ok_press(self):
+		pass
+		
+	def cancel_press(self):
+		self.destroy()
+		
 #------		
 		
 class AboutDialog(Toplevel):
