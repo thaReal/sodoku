@@ -2,6 +2,8 @@ from Tkinter import *
 
 import ui_puzzle
 import ui_interface
+import ui_debug
+
 import util
 import solver
 
@@ -35,42 +37,33 @@ class App(Tk):
 	def stepSolverInit(self):
 		raw_puzzle = self.puzzleframe.extractPuzzle()
 		self.stepsolver = solver.StepSolver(raw_puzzle)
-		
-		self.debug_window.step_btn['state'] = 'normal'
-		self.debug_window.step_btn['command'] = self.stepsolver.step
-		
-		self.debug_window.display_btn['state'] = 'normal'
-		self.debug_window.display_btn['command'] = self.stepsolver.pSolution.debugPrint
-		
-		self.debug_window.mstep_btn['state'] = 'normal'
-		self.debug_window.mstep_btn['command'] = self.multistep
-		
-		self.debug_window.mstep2_btn['state'] = 'normal'
-		self.debug_window.mstep2_btn['command'] = self.multistep2
-		
-		self.debug_window.run_btn['state'] = 'normal'
-		self.debug_window.run_btn['command'] = self.run
+		self.debug_window.step_solver_init()
 		
 	def debugValidate(self):
 		raw_puzzle = self.puzzleframe.extractPuzzle()
 		puzzle = solver.Puzzle(raw_puzzle)
 		puzzle.debugPrint()
 		print "[+] Done!"
+
 		
 	def step(self):
 		self.stepsolver.step()
+
 		
 	def multistep(self):
 		self.stepsolver.multistep(100)
+
 		
 	def multistep2(self):
 		self.stepsolver.multistep(1000)
+
 		
 	def run(self):
 		self.stepsolver.run()
 
+
 	def launch_debug(self):
-		self.debug_window = ui_interface.DebugWindow(self)
+		self.debug_window = ui_debug.DebugWindow(self)
 		self.debug_window.validate_btn["command"] = self.debugValidate
 		self.debug_window.stepsolve_btn["command"] = self.stepSolverInit
 	
