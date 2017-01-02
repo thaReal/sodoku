@@ -145,20 +145,25 @@ class StepSolver:
 		self.i = 0
 		self.n = 0
 		self.guesses = []
-		for x in range(9):
-			guess = Guess(self.puzzle.rows[x])
-			self.guesses.append(guess)
-		self.last_attempt = []
+
 		
 	def step(self):
 		if self.i < 9:
+				if len(self.guesses) == self.i:
+					guess = Guess(self.puzzle.rows[self.i])
+					self.guesses.append(guess)
+					print " ~} Added guesses for row %s" % (self.i + 1)
+				
 				p = self.guesses[self.i].get_permutation()
 				if p == None:
 					if self.i == 0:
 						print "No guesses.."
-						return
+						self.i = 9 # hack to break out of loop if we can't solve puzzle
+					
 					else:
+						self.guesses.pop()
 						self.i -= 1
+						print " >> i = %s" % self.i
 				
 				else:
 					self.pSolution.rows[self.i] = self.guesses[self.i].make_attempt(p)

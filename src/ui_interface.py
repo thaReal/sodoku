@@ -120,9 +120,15 @@ class LoadWindow(Toplevel):
 		self.ok_btn = Button(self.mainframe, text="Ok", command=self.loadFile)
 		self.ok_btn.pack(padx=5, pady=5, side=LEFT)
 		
+		self.rename_btn = Button(self.mainframe, text="Rename",
+		command=self.rename_file)
+		
 		self.cancel_btn = Button(self.mainframe, text="Cancel", 
 		command=self.destroy)
 		self.cancel_btn.pack(padx=5, pady=5, side=LEFT)
+		
+	def rename_file(self):
+		pass
 		
 	def loadFile(self):
 		findex = self.puzzle_box.curselection()
