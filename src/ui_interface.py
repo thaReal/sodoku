@@ -7,8 +7,6 @@ class ControlFrame(Frame):
 		self.parent = parent
 		self.initialize()
 		
-		self.init_debug()
-		
 	def initialize(self):
 		self.solve_btn = Button(self, text="Solve")
 		self.solve_btn.grid(column=0, row=0, padx=5, pady=5)
@@ -19,38 +17,46 @@ class ControlFrame(Frame):
 		self.quit_btn = Button(self, text="Quit", command=self.parent.destroy)
 		self.quit_btn.grid(column=2, row=0, padx=5, pady=5)
 		
-		
-	def init_debug(self):
-		self.seperator = Frame(self, height=2, bg="black")
-		self.seperator.grid(column=0, row=1, columnspan=3, sticky="WE")
-		
-		self.validate_btn = Button(self, text="Validate")
-		self.validate_btn.grid(column=0, row=2, padx=5, pady=5)
-		
-		self.stepsolve_btn = Button(self, text="Initialize Ssolver")
-		self.stepsolve_btn.grid(column=1, row=2, columnspan=2, padx=5, pady=5)
-		
-		step_lbl = Label(self, text="Step Options:", justify='center')
-		step_lbl.grid(column=0, row=3, columnspan=3)
-		
-		self.step_btn = Button(self, text="1x", state="disabled")
-		self.step_btn.grid(column=0, row=4, padx=5, pady=5)
-		
-		self.mstep_btn = Button(self, text="100x", state="disabled")
-		self.mstep_btn.grid(column=1, row=4, padx=5, pady=5)
-		
-		self.mstep2_btn = Button(self, text="1000x", state="disabled")
-		self.mstep2_btn.grid(column=2, row=4, padx=5, pady=5)
-		
-		self.display_btn = Button(self, text="Display", state="disabled")
-		self.display_btn.grid(column=0, row=5, padx=5, pady=5)
-		
-		self.run_btn = Button(self, text="Run", state="disabled")
-		self.run_btn.grid(column=2, row=5, padx=5, pady=5)
-		
-		
 	def clearPuzzle(self):
 		self.parent.puzzleframe.clearPuzzle()
+		
+		
+		
+class DebugWindow(Toplevel):
+	def __init__(self, parent):
+		Toplevel.__init__(self, parent)
+		self.parent = parent
+		self.frame = Frame(self, bg="#5c3566")
+		self.initialize()
+		
+	def initialize(self):
+		#self.seperator = Frame(self, height=2, bg="black")
+		#self.seperator.grid(column=0, row=1, columnspan=3, sticky="WE")
+		
+		self.validate_btn = Button(self, text="Validate")
+		self.validate_btn.grid(column=0, row=0, padx=5, pady=5)
+		
+		self.stepsolve_btn = Button(self, text="Initialize Ssolver")
+		self.stepsolve_btn.grid(column=0, row=1, columnspan=2, padx=5, pady=5)
+		
+		step_lbl = Label(self, text="Step Options:", justify='center')
+		step_lbl.grid(column=0, row=2, columnspan=3)
+		
+		self.step_btn = Button(self, text="1x", state="disabled")
+		self.step_btn.grid(column=0, row=3, padx=5, pady=5)
+		
+		self.mstep_btn = Button(self, text="100x", state="disabled")
+		self.mstep_btn.grid(column=0, row=4, padx=5, pady=5)
+		
+		self.mstep2_btn = Button(self, text="1000x", state="disabled")
+		self.mstep2_btn.grid(column=0, row=5, padx=5, pady=5)
+		
+		self.display_btn = Button(self, text="Display", state="disabled")
+		self.display_btn.grid(column=0, row=6, padx=5, pady=5)
+		
+		self.run_btn = Button(self, text="Run", state="disabled")
+		self.run_btn.grid(column=0, row=7, padx=5, pady=5)
+		
 		
 		
 class FileMenu(Menu):
@@ -89,10 +95,13 @@ class FileMenu(Menu):
 	def settingsDialog(self):
 		self.settings = SettingsWindow(self.parent)
 
+
+
 class LoadWindow(Toplevel):
 	def __init__(self, parent):
 		Toplevel.__init__(self, parent)
 		self.parent = parent
+		self.title("Load Puzzle")
 		self.initialize()
 		
 	def initialize(self):
@@ -125,6 +134,7 @@ class LoadWindow(Toplevel):
 		self.parent.loadPuzzle(puzzle)
 			
 		self.destroy()
+
 		
 		
 class StatusBar(Frame):
@@ -143,12 +153,15 @@ class StatusBar(Frame):
 		self.status_label.grid(column=1, row=0, sticky='w')
 
 
+
 class SettingsWindow(Toplevel):
 	def __init__(self, parent):
 		Toplevel.__init__(self, parent)
 		self.parent = parent
 		self.debugMode = IntVar()
 		self.autosave = IntVar()
+		self.debug_on = False
+		
 		self.initialize()
 		
 	def initialize(self):
@@ -164,11 +177,11 @@ class SettingsWindow(Toplevel):
 		debug_lbl.grid(column=0, row=1, padx=5, pady=5, sticky="NW")
 		
 		debug_on = Radiobutton(self.frame, text="On", variable=self.debugMode,
-		value=1, command=self.select_debug)
+		value=1)
 		debug_on.grid(column=1, row=1, padx=2, pady=5, sticky="NW")
 		
 		debug_off = Radiobutton(self.frame, text="Off", variable=self.debugMode,
-		value=0, command=self.select_debug)
+		value=0)
 		debug_off.grid(column=2, row=1, padx=2, pady=5, sticky="NW")
 		
 		autosave_lbl = Label(self.frame, text="Autosave\nSolution: ")
@@ -191,17 +204,30 @@ class SettingsWindow(Toplevel):
 		cancel_btn = Button(buttonframe, text="Cancel", command=self.cancel_press)
 		cancel_btn.grid(column=1, row=0, padx=5)
 		
-	def select_debug(self):
-		pass
-		
 	def select_autosave(self):
 		pass
 				
 	def ok_press(self):
-		pass
+		if self.debug_on == False and self.debugMode.get() == 1:
+			print "Launch Debug Window"
+			self.debug_on = True
+			self.parent.launch_debug()
+			self.destroy()
+			
+		elif self.debug_on == True and self.debugMode.get() == 0:
+			print "Destroy debug window"
+			self.debug_on = False
+			# code to destroy window here
+			self.destroy()
+		
+		else:
+			self.destroy()
 		
 	def cancel_press(self):
 		self.destroy()
+		
+	def launch_debug(self):
+		pass
 		
 #------		
 		
