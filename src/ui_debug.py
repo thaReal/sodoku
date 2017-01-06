@@ -2,9 +2,9 @@ from Tkinter import *
 
 class DebugWindow(Toplevel):
 	def __init__(self, parent):
-		Toplevel.__init__(self, parent)
+		Toplevel.__init__(self, parent, bg="#204a87")
 		self.parent = parent
-		self.frame = Frame(self, bg="#5c3566")
+		self.title("Debug")
 		self.initialize()
 
 		
@@ -12,7 +12,7 @@ class DebugWindow(Toplevel):
 		self.validate_btn = Button(self, text="Validate")
 		self.validate_btn.grid(column=0, row=0, padx=5, pady=5, sticky="W")
 		
-		self.stepsolve_btn = Button(self, text="Initialize Ssolver")
+		self.stepsolve_btn = Button(self, text="Initialize")
 		self.stepsolve_btn.grid(column=0, row=1, columnspan=2, padx=5, pady=5,
 		sticky="W")
 		
@@ -20,7 +20,7 @@ class DebugWindow(Toplevel):
 		seperator.grid(column=0, row=2, columnspan=3, sticky="WE")
 		
 		step_lbl = Label(self, text="Step Options:", justify='center')
-		step_lbl.grid(column=0, row=3, columnspan=3, sticky="W")
+		step_lbl.grid(column=0, row=3, columnspan=3, padx=5, pady=5, sticky="W")
 		
 		self.step_btn = Button(self, text="1x", state="disabled")
 		self.step_btn.grid(column=0, row=4, padx=5, pady=5, sticky="W")
@@ -40,6 +40,9 @@ class DebugWindow(Toplevel):
 		self.run_btn = Button(self, text="Run", state="disabled")
 		self.run_btn.grid(column=0, row=9, padx=5, pady=5, sticky="W")
 		
+		self.calc_btn = Button(self, text="Calculate", state="disabled")
+		self.calc_btn.grid(column=0, row=10, padx=5, pady=5, sticky="W")
+		
 		
 	def step_solver_init(self):
 		self.step_btn['state'] = 'normal'
@@ -56,5 +59,8 @@ class DebugWindow(Toplevel):
 		
 		self.run_btn['state'] = 'normal'
 		self.run_btn['command'] = self.parent.run
+		
+		self.calc_btn['state'] = 'normal'
+		self.calc_btn['command'] = self.parent.calc_possibilities
 		
 

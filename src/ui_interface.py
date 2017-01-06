@@ -148,7 +148,7 @@ class StatusBar(Frame):
 		Frame.__init__(self, parent, relief=SUNKEN, borderwidth=2)
 		self.parent = parent
 		self.text = StringVar()
-		self.text.set("waiting for input...")
+		self.text.set("Ready")
 		self.initialize()
 	
 	def initialize(self):
@@ -159,6 +159,9 @@ class StatusBar(Frame):
 		self.status_label.grid(column=1, row=0, sticky='w')
 
 
+	def set_status_running(self):
+		self.text.set("Running...")
+		
 
 class SettingsWindow(Toplevel):
 	def __init__(self, parent):

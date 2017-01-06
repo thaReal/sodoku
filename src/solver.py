@@ -88,6 +88,27 @@ class Puzzle:
 		for r in self.rows:
 			print r
 		print ''
+
+	def get_ind_combos(self):
+		i = 1
+		total = 0
+		
+		for row in self.rows:
+			n = 9
+			for cell in row:
+				if cell != '':
+					n -=1
+			p = factorial(n)
+			print "Row %s: %s possibilities" % (i, p)
+			i += 1	
+			
+			if total == 0:
+				total += p
+			else:
+				total *= p
+				
+		print "Total: %s" % total		
+			
 		
 		
 class Guess:
@@ -117,11 +138,6 @@ class Guess:
 		except:
 			return None
 
-	def get_possibilities(self):
-		l = len(self.numbers)
-		n = factorial(l)
-		return n			
-
 	def make_attempt(self, p):
 		row = []
 		count = 0
@@ -145,7 +161,6 @@ class StepSolver:
 		self.i = 0
 		self.n = 0
 		self.guesses = []
-
 		
 	def step(self):
 		if self.i < 9:
@@ -211,14 +226,12 @@ def check_puzzle(puzzle):
 		ncol = clean_blanks(col)
 		if len(ncol) != 0:
 			if len(ncol) != len(set(ncol)):
-				#print ">>> Column check failed"
 				return False
 			
 	for box in puzzle.boxes:
 		nbox = clean_blanks(box)
 		if len(nbox) != 0:
 			if len(nbox) != len(set(nbox)):
-				#print ">>> Box check failed"
 				return False
 				
 	return True

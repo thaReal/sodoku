@@ -1,4 +1,16 @@
 To Do:
 ======
 
->>> 
+>>> List of number of possibilities for n unknowns in a row:
+	1: 1
+	2: 2
+	3: 6
+	4: 24
+	5: 120
+	6: 720
+	7: 5040
+	8: 40320
+	9: 362880
+
+-> So not that bad in terms of storing valid possibilities in lists for an optimized,
+multithreaded solver.

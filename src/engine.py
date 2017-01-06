@@ -62,6 +62,10 @@ class App(Tk):
 		self.stepsolver.run()
 
 
+	def calc_possibilities(self):
+		self.stepsolver.puzzle.get_ind_combos()
+
+
 	def launch_debug(self):
 		self.debug_window = ui_debug.DebugWindow(self)
 		self.debug_window.validate_btn["command"] = self.debugValidate
