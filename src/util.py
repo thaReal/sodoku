@@ -36,7 +36,7 @@ def generate_fname():
 	# For now just going to use the time so at least each filename should be unique
 	t = time.ctime()
 	tlist = t.split(' ')
-	fname = tlist[1] + '-' + tlist[2] + '-' + tlist[4] + '-' + tlist[3]
+	fname = tlist[1] + '-' + tlist[3] + '-' + tlist[5] + '-' + tlist[4]
 	return fname
 	
 

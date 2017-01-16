@@ -111,11 +111,16 @@ class LoadWindow(Toplevel):
 		lbl = Label(self.mainframe, text="Select file to load:", justify=LEFT)
 		lbl.pack(expand=1, fill=X)
 		
+		scrollbar = Scrollbar(self.mainframe)
+		scrollbar.pack(side=RIGHT, fill=Y)
+		
 		self.puzzle_list = util.list_puzzles()
 		self.puzzle_box = Listbox(self.mainframe)
 		for  f in self.puzzle_list:
 			self.puzzle_box.insert(0, f)
-		self.puzzle_box.pack(expand=1, fill=X)
+		self.puzzle_box.pack(expand=1, fill=Y)
+		
+		scrollbar.config(command=self.puzzle_box.yview)
 		
 		self.ok_btn = Button(self.mainframe, text="Ok", command=self.loadFile)
 		self.ok_btn.pack(padx=5, pady=5, side=LEFT)

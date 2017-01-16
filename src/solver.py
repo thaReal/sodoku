@@ -89,25 +89,15 @@ class Puzzle:
 			print r
 		print ''
 
-	def get_ind_combos(self):
-		i = 1
-		total = 0
-		
-		for row in self.rows:
-			n = 9
-			for cell in row:
-				if cell != '':
-					n -=1
-			p = factorial(n)
-			print "Row %s: %s possibilities" % (i, p)
-			i += 1	
-			
-			if total == 0:
-				total += p
-			else:
-				total *= p
-				
-		print "Total: %s" % total		
+	def get_ind_combos(self, n_row):
+		row = self.rows[n_row]
+		n = 9
+		for cell in row:
+			if cell != '':
+				n -=1
+		p = factorial(n)
+		return p		
+
 			
 		
 		
@@ -168,6 +158,8 @@ class StepSolver:
 					guess = Guess(self.puzzle.rows[self.i])
 					self.guesses.append(guess)
 					print " ~} Added guesses for row %s" % (self.i + 1)
+					
+					
 				
 				p = self.guesses[self.i].get_permutation()
 				if p == None:
